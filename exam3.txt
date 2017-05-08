@@ -1,0 +1,295 @@
+Exam #3 score (rduenas2): 200/200
+
+=== Grade Feedback for Problem "programming_linkedlist_animalShelter_3func" ===
+[6/6]: Test: Empty list returns NULL
+[4/4]: Test: List of 1 dog returns NULL when requesting a cat
+[4/4]: Test: List of multiple dogs returns NULL when requesting a cat
+[4/4]: Test: List of 1 cat returns NULL when requesting a dog
+[4/4]: Test: List of multiple cats returns NULL when requesting a dog
+[4/4]: Test: Removing the only element in the list (reference check)
+[4/4]: Test: Removing from a one-element list (value check)
+[20/20]: Test: Full exam-provided example (reference)
+[50/50]: Test: Full exam-provided example (value)
+=====
+[100/100]
+
+--- stdout ---
+g++ animal.cpp cat.cpp dog.cpp animal-test.cpp list.cpp -std=c++1y -lpng -lpthread -g -o animal-test
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+===============================================================================
+All tests passed (19 assertions in 9 test cases)
+
+
+
+--- stderr ---
+
+
+--- submitted file: list.cpp ---
+#define _LIST_CPP
+#include "list.h"
+#include "animal.h"
+#include <cstddef>
+#include <iostream>
+
+//
+//  In the `List` class, complete the `adoptCat`, `adoptDog`, and `adoptAny`
+// member function in `list.cpp`.  Each of these functions must:
+//
+// 1. find the animal closest to the head of the list that meets the function
+//    preferences (if a suitable animal exists),
+// 2. remove that node from the list, and
+// 3. return a pointer to the `Animal` (if a suitable animal was found) **or**
+//    `NULL` if no animal was found
+//
+
+template <class T>
+const Animal *List<T>::adoptCat() {
+if(head==NULL) return NULL;
+  ListNode *a=NULL;
+  ListNode *c=head;
+  ListNode *t=NULL;
+if(c->data->getType()=="Cat"){
+a=c;
+if(head->next==NULL)
+head=NULL;
+else
+head=head->next;
+return a->data;
+}
+else
+{
+t=head;
+c=head->next;
+}
+while(c!=NULL){
+	if(c->data->getType()=="Cat")
+	{
+	a=c;
+	t->next=c->next;
+	c->next=NULL;
+	return a->data;
+	}
+t=c;
+c=c->next;
+}
+
+return NULL;
+}
+
+template <class T>
+const Animal *List<T>::adoptDog() {
+if(head==NULL) return NULL;
+  ListNode *a=NULL;
+  ListNode *c=head;
+  ListNode *t=NULL;
+if(c->data->getType()=="Dog"){
+a=c;
+if(head->next==NULL)
+head=NULL;
+else
+head=head->next;
+}
+else
+{
+t=head;
+c=head->next;
+}
+while(c!=NULL){
+	if(c->data->getType()=="Dog")
+	{
+	a=c;
+	t->next=c->next;
+	c->next=NULL;
+	return a->data;
+	}
+t=c;
+c=c->next;
+}
+
+return NULL;
+}
+
+template <class T>
+const Animal *List<T>::adoptAny() {
+if(head==NULL) return NULL;
+ListNode *t=head;
+head=head->next;
+t->next=NULL;
+  return t->data;
+}
+
+
+
+template <class T>
+List<T>::List() {
+  this->head = NULL;
+}
+
+template <class T>
+void List<T>::insertFront(const T& ndata) {
+  ListNode* node = new ListNode(ndata);
+  node->next = head;
+  this->head = node;
+}
+
+
+=== Grade Feedback for Problem "programming_linkedlist_gameNight_leaders2_start" ===
+[30/30]: Test: List of six people (by ref)
+[70/70]: Test: List of six people (by value)
+=====
+[100/100]
+
+--- stdout ---
+g++ gameNight-test.cpp list-p2.cpp person.cpp -std=c++1y -lpng -lpthread -g -o gameNight-test
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+===============================================================================
+All tests passed (12 assertions in 2 test cases)
+
+
+
+--- stderr ---
+
+
+--- submitted file: list-p2.cpp ---
+#define _LIST_CPP
+#include "list.h"
+#include "person.h"
+
+#include <cstddef>
+
+
+//
+// In the `List` class, complete the `reorganizeList` member function in
+// `list.cpp`.  The `reorganizeList` function must place all leaders at the
+// front of the list followed by all non-leaders, while otherwise maintain
+// the same order.
+//
+
+template <class T>
+void List<T>::reorganizeList() {
+
+if(head==NULL||head->next==NULL) return;
+ListNode *c=head;
+ListNode *leaders=NULL;
+ListNode *students=NULL;
+ListNode *hl=NULL;
+ListNode *hs=NULL;
+
+
+
+
+
+if(c->leader)
+{
+leaders=c;
+hl=leaders;
+c=c->next;
+leaders->next=NULL;
+students=c;
+hs=students;
+c=c->next;
+students->next=NULL;
+}
+else{
+students=c;
+hs=students;
+c=c->next;
+students->next=NULL;
+leaders=c;
+hl=leaders;
+c=c->next;
+leaders->next=NULL;
+}
+
+	while(c!=NULL)
+  {
+	if(c->leader)	
+	{
+	leaders->next=c;
+	c=c->next;
+	leaders=leaders->next;
+	leaders->next=NULL;
+	}
+	else
+	{
+	students->next=c;
+	c=c->next;
+	students=students->next;
+	students->next=NULL;
+	}
+  }
+
+head=hl;
+leaders->next=hs;
+c=NULL;
+leaders=NULL;
+students=NULL;
+hl=NULL;
+hs=NULL;
+
+}
+
+
+
+template <class T>
+List<T>::List() {
+  this->head = NULL;
+}
+
+template <class T>
+void List<T>::insertBack(const T& ndata) {
+  static int ct = 0;
+
+  ListNode* node = new ListNode(ndata);
+  node->leader = (ct++ % 2 == 0);
+
+  if (!head) {
+    head = node;
+  } else {
+    ListNode *thru = head;
+    while (thru->next != NULL) { thru = thru->next; }
+    thru->next = node;
+  }
+}
+
+template <class T>
+const T *List<T>::get(int index) const {
+  ListNode *thru = head;
+  while (thru && index-- > 0) { thru = thru->next; }
+
+  if (thru) { return &(thru->data); }
+  else      { return NULL; }
+}
+
+
